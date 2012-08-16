@@ -1,0 +1,12 @@
+extends ../layout
+
+block container-outer
+	.container-fluid(style='margin-top:50px;')
+		.span2
+			ul.nav.nav-pills.nav-stacked
+				li
+					a(href='/about') About us
+				li
+					a(href='/about/company') Our company
+		.span10
+			block content-inner

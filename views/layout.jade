@@ -1,7 +1,16 @@
-doctype 5
+doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+	head
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		.navbar.navbar-fixed-top
+			.navbar-inner
+				.container
+					ul.nav
+						li.active
+							a(href='/') Home	
+						li.active
+							a(href='/about') About
+		block container-outer
+			.container(style='margin-top:50px;')			
+				block content

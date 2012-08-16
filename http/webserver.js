@@ -1,7 +1,10 @@
 var 
 	path = require('path'),
+	config = require('config'),
+	expressController = require('express-controller'),
 	expressValidator = require('express-validator'),
 	_ = require('underscore'),
+	http = require('http'),
 	express = require('express');
 
 module.exports = function(options) {
@@ -25,29 +28,19 @@ module.exports = function(options) {
 			this.app.configure(this.configure);
 		},
 
-		route : function() {
-			this.app.get('/', function(req, res) {
-				res.render('index', { title: 'Express' });
-			});
-		},
-
-		/*
-			Returns an object that will be available in all views
-		*/
-		dynamicHelpers : function() {
-			return {
-				//Makes the request-object available in all views
-				request : function(req, res) {
-					return req;
-				}
-			}
-		},
-
 		/*
 			Creates the app-object
 		*/
 		createApp : function() {
-			this.app = express.createServer();
+			this.app = express();
+		},
+
+		/*
+			Middleware that sets global variables for all requests.
+		*/
+		setLocals : function(req, res, next) {
+			res.locals.request = req;
+			next();
 		},
 
 		/*
@@ -69,21 +62,24 @@ module.exports = function(options) {
 			this.app.use(express.bodyParser({
 				//Required for file-uploads to work
 				keepExtensions : true,
-				uploadDir : __dirname + "/../public/uploads"
+				uploadDir : __dirname + "/../" + config.webserver.uploadDir
 			}));
 
-			this.app.dynamicHelpers(this.dynamicHelpers)
+			this.app.use(this.setLocals);
 		},
 
 		/*
 			Starts the server
 		*/
 		start : function() {
-			//Start listening
-			this.app.listen(this.port);
+			//Start a http-server and listen to the port
+			http.createServer(this.app).listen(this.port).listen(function() {
 
+			});
 			//Create routing
-			this.route();
+			expressController
+	            .setDirectory(__dirname + '/../controllers')
+	            .bind(this.app);
 		}
 	};
 	
