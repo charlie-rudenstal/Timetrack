@@ -50,6 +50,9 @@ module.exports = function(options) {
 			//Configure view-engine
 			this.app.set('views', __dirname + '/../views');
 			this.app.set('view engine', 'jade');
+			this.app.set('view options', {
+				client: true
+			});
 			
 			this.app.use(express.favicon());
 			this.app.use(express.logger('dev'));

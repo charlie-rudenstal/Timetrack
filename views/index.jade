@@ -1,4 +1,7 @@
 extends layout
 
 block content
-	p hello
+	p Your mates:
+		ul
+			for member in members
+				li= member.name
