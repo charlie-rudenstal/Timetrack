@@ -1,13 +1,6 @@
 traceur = global.traceur || {};require("traceur-runtime");
 var models = require('../models'); 
 var Deferred = traceur.runtime.Deferred; 
-function asyncFind() { 
-  var d = new Deferred(); 
-  models.Member.find({ }, function(err, members) { 
-    d.callback(members); 
-  }); 
-  return d.createPromise(); 
-} 
 module.exports = { get_index: function(req, res) { 
     var $that = this; 
     var $state = 4; 
@@ -43,7 +36,7 @@ module.exports = { get_index: function(req, res) {
             break; 
 
           case 11: 
-            $waitTask = asyncFind(); 
+            $waitTask = models.Member.asyncFind({ }); 
             $waitTask.then($createCallback(1), $createErrback(2)); 
             return; 
             $state = 1; 

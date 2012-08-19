@@ -12,7 +12,7 @@ controllers:
 
 models:
 	# Just copy to bin folder to get relative paths in require:s correct 
-	cp -r src/models bin/models
+	cp -r src/models bin/.
 
 restart:
 	# Forever restart will trigger error if the process doesn't exist
