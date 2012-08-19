@@ -1,6 +1,6 @@
 var config    = require('config')
   , mongoose  = require('mongoose')
-  , webserver = require('./http/webserver')
+  , webserver = require('./webserver')
   ,	webport   = process.env.PORT || config.webserver.port || 8080;
 
 mongoose.connect(config.database.host);
