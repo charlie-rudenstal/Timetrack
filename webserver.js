@@ -86,7 +86,7 @@ module.exports = function(options) {
 			});
 			//Create routing
 			expressController
-	            .setDirectory(__dirname + '/src/controllers')
+	            .setDirectory(__dirname + '/bin/controllers')
 	            .bind(this.app);
 		}
 	};
