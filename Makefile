@@ -1,4 +1,4 @@
-all: controllers models
+all: controllers models restart
 	
 controllers:
 	# Compile controllers to a temp directory first
@@ -14,4 +14,9 @@ models:
 	# Just copy to bin folder to get relative paths in require:s correct 
 	cp -r src/models bin/models
 
-.PHONY: all controllers models 
+restart:
+	# Forever restart will trigger error if the process doesn't exist
+	forever stop app.js
+	forever start app.js
+
+.PHONY: all controllers models restart
